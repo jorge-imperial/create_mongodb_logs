@@ -10,6 +10,7 @@ from shutil import copyfile, rmtree
 from os import path, mkdir, system
 from sys import argv
 
+from time import sleep
 
 def run_commands(db):
     #
@@ -58,6 +59,10 @@ def generate_logs(versions, output_dir, jscript):
         mongod = subprocess.Popen(bin_cmd + ' -f ' + mongo_conf_file_name, shell=True)
         print 'Starting process with PID %d' % mongod.pid
 
+        # Wait a little to make sure mongod is up.
+        sleep(15)
+
+        # This is the preferred method of testing.
         if jscript:
             # run script
             mongo_cmd = path.join(version['path'], 'mongo')
@@ -71,8 +76,8 @@ def generate_logs(versions, output_dir, jscript):
             except py_errors.ConnectionFailure:
                 print 'Error trying to connect client to mongod process.'
 
+        # Terminate process
         system("killall -9 mongod")
-
         mongod.terminate()
 
         mongo_log_file_name = path.join(output_dir, 'mongo-'+version['name']+'.log')
