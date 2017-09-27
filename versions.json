@@ -1,0 +1,14 @@
+ [
+   {
+     "name": "3.0.12",
+     "path": "/usr/local/m/versions/3.0.12/bin"
+   },
+   {
+     "name": "3.2.13",
+     "path": "/usr/local/m/versions/3.2.13/bin"
+   },
+   {
+     "name": "3.4.7-ent",
+     "path": "/usr/local/m/versions/3.4.7-ent/bin"
+   }
+ ]

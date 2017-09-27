@@ -1,0 +1,2 @@
+use admin;
+show dbs;
