@@ -4,7 +4,7 @@
 Using a list of versions specified in a file, runs a script with CRUD operations. The logs generated will be saved in a directory structure, along with the mongod.conf file used.
 
 
-usage: create_mongo_logs.py [-h] [-m MONGO_CONFIG] [-v VERSIONS]
+usage: create_mongodb_logs.py [-h] [-m MONGO_CONFIG] [-v VERSIONS]
                             [-o OUTPUT_DIR] [-j JSCRIPT]
 
 Create mongod.log files for different versions of mongod.
