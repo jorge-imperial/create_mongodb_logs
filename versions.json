@@ -1,7 +1,8 @@
  [
    {
      "name": "3.0.12",
-     "path": "/usr/local/m/versions/3.0.12/bin"
+     "path": "/usr/local/m/versions/3.0.12/bin",
+     "conf": "conf-3.0.conf"
    },
    {
      "name": "3.2.13",
