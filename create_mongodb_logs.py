@@ -12,6 +12,7 @@ from sys import argv
 
 from time import sleep
 
+
 def run_commands(db):
     #
     for i in xrange(10):
@@ -19,6 +20,7 @@ def run_commands(db):
 
     for i in xrange(5):
         db.foo.find_one({'field_c': i})
+
 
 
 def generate_logs(versions, output_dir, jscript):
@@ -30,19 +32,26 @@ def generate_logs(versions, output_dir, jscript):
     :param output_dir:
     :return:
     """
-    # TODO: read configuration from file and add user defined parameters from the command line.
-    with open('./mongod.conf', 'rt') as stream:
-        yaml_data = yaml.safe_load(stream)
 
     # For all versions...
     for version in versions:
         print 'Version is %s ' % version['name']
 
-        mongo_conf_file_name = path.join(output_dir, 'mongo-'+version['name']+'.conf')
+        # Use mongod.conf file from configuration, but default to ./mongod.conf
+        if 'conf' in version:
+            config_file = version['conf']
+        else:
+            config_file = 'mongod.conf'
+
+        # TODO: read configuration from file and add user defined parameters from the command line.
+        with open(config_file, 'rt') as stream:
+            yaml_data = yaml.safe_load(stream)
+
+        mongo_conf_file_name = path.join(output_dir, 'mongod-'+version['name']+'.conf')
         with open(mongo_conf_file_name, 'wt') as mongo_conf:
             # TODO: add cmd line params
             # ...
-            yaml.safe_dump(yaml_data, mongo_conf)
+            yaml.safe_dump(yaml_data, mongo_conf, default_flow_style=False)
 
         # Kill mongod if running
         system("killall -9 mongod")
@@ -80,7 +89,7 @@ def generate_logs(versions, output_dir, jscript):
         system("killall -9 mongod")
         mongod.terminate()
 
-        mongo_log_file_name = path.join(output_dir, 'mongo-'+version['name']+'.log')
+        mongo_log_file_name = path.join(output_dir, 'mongod-'+version['name']+'.log')
         system_log = yaml_data['systemLog']['path']
 
         if path.exists(system_log):
